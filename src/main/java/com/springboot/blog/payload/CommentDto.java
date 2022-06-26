@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Data
 public class CommentDto {
@@ -18,6 +19,6 @@ public class CommentDto {
     private String email;
 
     @NotEmpty
-    @Min(10)
+    @Size(min = 10, message = "Body should have at least 10 characters.")
     private String body;
 }
