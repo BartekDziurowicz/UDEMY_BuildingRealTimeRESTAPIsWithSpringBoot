@@ -41,12 +41,12 @@ public class PostController {
     }
 
     // get post by id
-    @GetMapping("/api/v1/posts/{id}")
+    @GetMapping(value = "/api/posts/{id}", params = "version=1")
     public ResponseEntity<PostDto> getPostById(@PathVariable(name="id") long id){
         return ResponseEntity.ok(postService.getPostById(id));
     }
 
-    @GetMapping("/api/v2/posts/{id}")
+    @GetMapping(value = "/api/posts/{id}", params = "version=2")
     public ResponseEntity<PostDtoV2> getPostByIdV2(@PathVariable(name="id") long id){
         PostDto postDto = postService.getPostById(id);
         PostDtoV2 postDtoV2 = new PostDtoV2();
@@ -66,7 +66,7 @@ public class PostController {
 
     // update post by id rest api
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/api/v1/posts/{id}")
+    @PutMapping("/api/posts/{id}")
     public ResponseEntity<PostDto> updatePost(@Valid @RequestBody PostDto postDto, @PathVariable(name="id") long id) {
         PostDto postResponse = postService.updatePost(postDto, id);
         return new ResponseEntity<>(postResponse, HttpStatus.OK);
@@ -74,7 +74,7 @@ public class PostController {
 
     // delete post by id rest api
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/api/v1/posts/{id}")
+    @DeleteMapping("/api/posts/{id}")
     public ResponseEntity<String> deletePost(@PathVariable(name="id") long id) {
         postService.deletePostById(id);
         return new ResponseEntity<>("Post entity deleted successfully", HttpStatus.OK);
